@@ -14,7 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WorldRenderer.class)
 public class MixinWorldRenderer {
-    @Redirect(
+    //Fixme:
+    /*@Redirect(
             method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V",
             at = @At(
                     value = "INVOKE",
@@ -26,7 +27,7 @@ public class MixinWorldRenderer {
         if (SodiumExtraClientMod.options().detailSettings.sky) {
             instance.setShader(viewMatrix, projectionMatrix, shader);
         }
-    }
+    }*/
 
     @Inject(method = "renderEndSky", at = @At(value = "HEAD"), cancellable = true)
     public void preRenderEndSky(MatrixStack matrices, CallbackInfo ci) {
