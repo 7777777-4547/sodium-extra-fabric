@@ -20,7 +20,7 @@ public interface ControlValueFormatterExtended extends ControlValueFormatter {
     static ControlValueFormatter fogDistance() {
         return (v) -> {
             if (v == 0) {
-                return Text.translatable("generator.default").getString();
+                return Text.translatable("options.gamma.default").getString();
             } else if (v == 33) {
                 return Text.translatable("options.off").getString();
             } else {
