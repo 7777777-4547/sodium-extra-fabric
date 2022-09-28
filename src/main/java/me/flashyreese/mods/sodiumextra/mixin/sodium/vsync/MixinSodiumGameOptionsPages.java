@@ -44,7 +44,7 @@ public class MixinSodiumGameOptionsPages {
                         }
                         case ADAPTIVE -> {
                             opts.extraSettings.useAdaptiveSync = true;
-                            vanillaOpts.getData().getEnableVsync().setValue(false);
+                            vanillaOpts.getData().getEnableVsync().setValue(true);
                         }
                     }
                     vanillaOpts.save();

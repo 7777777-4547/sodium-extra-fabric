@@ -39,8 +39,8 @@
   ],
   "depends": {
     "fabricloader": ">=0.14",
-    "fabric-lifecycle-events-v1": "*",
-    "sodium": ">=0.4.2"
+    "fabric": "*",
+    "sodium": ">=0.4.4"
   },
   "breaks": {
     "reeses-sodium-options": "<1.4.2"
