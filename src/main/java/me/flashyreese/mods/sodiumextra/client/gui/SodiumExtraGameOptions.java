@@ -202,6 +202,7 @@ public class SodiumExtraGameOptions {
 
     public static class RenderSettings {
         public int fogDistance;
+        public int fogStart;
         public boolean multiDimensionFogControl;
         @SerializedName("dimensionFogDistance")
         public Map<Identifier, Integer> dimensionFogDistanceMap;
@@ -218,6 +219,7 @@ public class SodiumExtraGameOptions {
 
         public RenderSettings() {
             this.fogDistance = 0;
+            this.fogStart = 100;
             this.multiDimensionFogControl = false;
             this.dimensionFogDistanceMap = new Object2IntArrayMap<>();
             this.useLinearFlatColorBlender = false;
@@ -243,6 +245,10 @@ public class SodiumExtraGameOptions {
         public boolean useAdaptiveSync;
         public int cloudHeight;
         public boolean toasts;
+        public boolean advancementToast;
+        public boolean recipeToast;
+        public boolean systemToast;
+        public boolean tutorialToast;
         public boolean instantSneak;
         public boolean preventShaders;
 
@@ -256,6 +262,10 @@ public class SodiumExtraGameOptions {
             this.useAdaptiveSync = false;
             this.cloudHeight = 192;
             this.toasts = true;
+            this.advancementToast = true;
+            this.recipeToast = true;
+            this.systemToast = true;
+            this.tutorialToast = true;
             this.instantSneak = false;
             this.preventShaders = false;
         }
