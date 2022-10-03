@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class SodiumExtraGameOptionPages {
     public static final SodiumExtraOptionsStorage sodiumExtraOpts = new SodiumExtraOptionsStorage();
 
-    private static String parseVanillaString(String key){
+    private static String parseVanillaString(String key) {
         return new LiteralText((new TranslatableText(key).getString()).replaceAll("§.", "")).getString();
     }
 
@@ -205,6 +205,13 @@ public class SodiumExtraGameOptionPages {
                         .setTooltip(new TranslatableText("sodium-extra.option.multi_dimension_fog.tooltip").getString())
                         .setControl(TickBoxControl::new)
                         .setBinding((options, value) -> options.renderSettings.multiDimensionFogControl = value, options -> options.renderSettings.multiDimensionFogControl)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(int.class, sodiumExtraOpts)
+                        .setName(new TranslatableText("sodium-extra.option.fog_start").getString())
+                        .setTooltip(new TranslatableText("sodium-extra.option.fog_start.tooltip").getString())
+                        .setControl(option -> new SliderControlExtended(option, 0, 100, 1, ControlValueFormatter.percentage(), false))
+                        .setBinding((options, value) -> options.renderSettings.fogStart = value, options -> options.renderSettings.fogStart)
                         .build()
                 )
                 .build());
@@ -402,6 +409,8 @@ public class SodiumExtraGameOptionPages {
                         .setBinding((options, value) -> options.extraSettings.cloudHeight = value, options -> options.extraSettings.cloudHeight)
                         .build()
                 )
+                .build());
+        groups.add(OptionGroup.createBuilder()
                 .add(OptionImpl.createBuilder(boolean.class, sodiumExtraOpts)
                         .setName(new TranslatableText("sodium-extra.option.toasts").getString())
                         .setTooltip(new TranslatableText("sodium-extra.option.toasts.tooltip").getString())
@@ -409,6 +418,36 @@ public class SodiumExtraGameOptionPages {
                         .setBinding((options, value) -> options.extraSettings.toasts = value, options -> options.extraSettings.toasts)
                         .build()
                 )
+                .add(OptionImpl.createBuilder(boolean.class, sodiumExtraOpts)
+                        .setName(new TranslatableText("sodium-extra.option.advancement_toast").getString())
+                        .setTooltip(new TranslatableText("sodium-extra.option.advancement_toast.tooltip").getString())
+                        .setControl(TickBoxControl::new)
+                        .setBinding((options, value) -> options.extraSettings.advancementToast = value, options -> options.extraSettings.advancementToast)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, sodiumExtraOpts)
+                        .setName(new TranslatableText("sodium-extra.option.recipe_toast").getString())
+                        .setTooltip(new TranslatableText("sodium-extra.option.recipe_toast.tooltip").getString())
+                        .setControl(TickBoxControl::new)
+                        .setBinding((options, value) -> options.extraSettings.recipeToast = value, options -> options.extraSettings.recipeToast)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, sodiumExtraOpts)
+                        .setName(new TranslatableText("sodium-extra.option.system_toast").getString())
+                        .setTooltip(new TranslatableText("sodium-extra.option.system_toast.tooltip").getString())
+                        .setControl(TickBoxControl::new)
+                        .setBinding((options, value) -> options.extraSettings.systemToast = value, options -> options.extraSettings.systemToast)
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(boolean.class, sodiumExtraOpts)
+                        .setName(new TranslatableText("sodium-extra.option.tutorial_toast").getString())
+                        .setTooltip(new TranslatableText("sodium-extra.option.tutorial_toast.tooltip").getString())
+                        .setControl(TickBoxControl::new)
+                        .setBinding((options, value) -> options.extraSettings.tutorialToast = value, options -> options.extraSettings.tutorialToast)
+                        .build()
+                )
+                .build());
+        groups.add(OptionGroup.createBuilder()
                 .add(OptionImpl.createBuilder(boolean.class, sodiumExtraOpts)
                         .setName(new TranslatableText("sodium-extra.option.instant_sneak").getString())
                         .setTooltip(new TranslatableText("sodium-extra.option.instant_sneak.tooltip").getString())
