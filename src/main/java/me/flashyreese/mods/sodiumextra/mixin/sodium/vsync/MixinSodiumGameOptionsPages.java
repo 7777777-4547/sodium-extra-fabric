@@ -26,7 +26,7 @@ public class MixinSodiumGameOptionsPages {
 
     @Redirect(method = "general", at = @At(value = "INVOKE", target = "Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup$Builder;add(Lme/jellysquid/mods/sodium/client/gui/options/Option;)Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup$Builder;", ordinal = 5), remap = false)
     private static OptionGroup.Builder redirectVsyncToggle(OptionGroup.Builder instance, Option<?> option) {
-        if (!option.getTooltip().getString().equals("If enabled, the game's frame rate will be synchronized to the monitor's refresh rate, making for a generally smoother experience at the expense of overall input latency. This setting might reduce performance if your system is too slow.")) {
+        if (!option.getTooltip().getString().equals(new TranslatableText("sodium.options.v_sync.tooltip").getString())) {
             return instance.add(option);
         }
         return instance.add(OptionImpl.createBuilder(SodiumExtraGameOptions.VerticalSyncOption.class, SodiumExtraGameOptionPages.sodiumExtraOpts)
