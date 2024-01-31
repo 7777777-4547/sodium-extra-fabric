@@ -46,5 +46,21 @@ public class MixinSodiumGameOptionPages {
                         .build()
                 )
                 .build());
+        groups.add(OptionGroup.createBuilder()
+                .add(OptionImpl.createBuilder(int.class, vanillaOpts)
+                        .setName(Text.translatable("options.glintSpeed"))
+                        .setTooltip(Text.translatable("options.glintSpeed.tooltip"))
+                        .setControl(option -> new SliderControl(option, 0, 100, 1, ControlValueFormatter.percentage()))
+                        .setBinding((opts, value) -> opts.getGlintSpeed().setValue((double) value / 100.0F), (opts) -> Math.toIntExact(Math.round(opts.getGlintSpeed().getValue() * 100.0F)))
+                        .build()
+                )
+                .add(OptionImpl.createBuilder(int.class, vanillaOpts)
+                        .setName(Text.translatable("options.glintStrength"))
+                        .setTooltip(Text.translatable("options.glintStrength.tooltip"))
+                        .setControl(option -> new SliderControl(option, 0, 100, 1, ControlValueFormatter.percentage()))
+                        .setBinding((opts, value) -> opts.getGlintStrength().setValue((double) value / 100.0F), (opts) -> Math.toIntExact(Math.round(opts.getGlintStrength().getValue() * 100.0F)))
+                        .build()
+                )
+                .build());
     }
 }
