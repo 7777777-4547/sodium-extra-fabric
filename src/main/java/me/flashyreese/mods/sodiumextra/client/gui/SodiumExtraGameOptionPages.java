@@ -10,12 +10,13 @@ import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatte
 import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
+import me.jellysquid.mods.sodium.client.gui.options.storage.MinecraftOptionsStorage;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.text.Texts;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.dimension.DimensionOptions;
+import net.minecraft.world.dimension.DimensionOptionsRegistryHolder;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -23,6 +24,7 @@ import java.util.stream.Stream;
 
 public class SodiumExtraGameOptionPages {
     public static final SodiumExtraOptionsStorage sodiumExtraOpts = new SodiumExtraOptionsStorage();
+    public static final MinecraftOptionsStorage vanillaOpts = new MinecraftOptionsStorage();
 
     private static Text parseVanillaString(String key) {
         return Text.literal((Text.translatable(key).getString()).replaceAll("§.", ""));
@@ -130,7 +132,7 @@ public class SodiumExtraGameOptionPages {
                 )
                 .build());
 
-        Map<String, List<Identifier>> otherParticles = Registry.PARTICLE_TYPE.getIds().stream()
+        Map<String, List<Identifier>> otherParticles = Registries.PARTICLE_TYPE.getIds().stream()
                 .collect(Collectors.groupingBy(Identifier::getNamespace));
         otherParticles.forEach((namespace, identifiers) -> groups.add(identifiers.stream()
                 .map(identifier -> OptionImpl.createBuilder(boolean.class, sodiumExtraOpts)
@@ -218,15 +220,15 @@ public class SodiumExtraGameOptionPages {
                 .add(OptionImpl.createBuilder(int.class, sodiumExtraOpts)
                         .setName(Text.translatable("sodium-extra.option.fog_start"))
                         .setTooltip(Text.translatable("sodium-extra.option.fog_start.tooltip"))
-                        .setControl(option -> new SliderControlExtended(option, 0, 100, 1, ControlValueFormatter.percentage(), false))
+                        .setControl(option -> new SliderControlExtended(option, 20, 100, 1, ControlValueFormatter.percentage(), false))
                         .setBinding((options, value) -> options.renderSettings.fogStart = value, options -> options.renderSettings.fogStart)
                         .build()
                 )
                 .build());
 
         if (SodiumExtraClientMod.options().renderSettings.multiDimensionFogControl) {
-            DimensionOptions
-                    .streamRegistry(Stream.empty())
+            DimensionOptionsRegistryHolder
+                    .streamAll(Stream.empty())
                     .filter(dim -> !SodiumExtraClientMod.options().renderSettings.dimensionFogDistanceMap.containsKey(dim.getValue()))
                     .forEach(dim -> SodiumExtraClientMod.options().renderSettings.dimensionFogDistanceMap.put(dim.getValue(), 0));
             groups.add(SodiumExtraClientMod.options().renderSettings.dimensionFogDistanceMap.keySet().stream()
@@ -395,6 +397,15 @@ public class SodiumExtraGameOptionPages {
                         .setBinding((options, value) -> options.extraSettings.cloudHeight = value, options -> options.extraSettings.cloudHeight)
                         .build()
                 )
+                .build());
+        groups.add(OptionGroup.createBuilder()
+                        .add(OptionImpl.createBuilder(boolean.class, vanillaOpts)
+                                .setName(Text.translatable("sodium-extra.option.advanced_item_tooltips"))
+                                .setTooltip(Text.translatable("sodium-extra.option.advanced_item_tooltips.tooltip"))
+                                .setControl(TickBoxControl::new)
+                                .setBinding((opts, value) -> opts.advancedItemTooltips = value, opts -> opts.advancedItemTooltips)
+                                .build()
+                        )
                 .build());
         groups.add(OptionGroup.createBuilder()
                 .add(OptionImpl.createBuilder(boolean.class, sodiumExtraOpts)
